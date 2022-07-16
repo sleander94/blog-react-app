@@ -1,4 +1,4 @@
-import * as React from 'react';
+import React from 'react';
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -33,6 +33,15 @@ function Copyright(props: any) {
 const theme = createTheme();
 
 export default function SignUp() {
+  // Set error status of all inputs to false by default
+  const [errors, setErrors] = React.useState<any>({
+    firstname: false,
+    lastname: false,
+    email: false,
+    password: false,
+    'confirm-password': false,
+  });
+
   const [formData, setFormData] = React.useState<signupUser>({
     firstname: '',
     lastname: '',
@@ -41,16 +50,31 @@ export default function SignUp() {
     'confirm-password': '',
   });
 
+  const checkValidity = (name: keyof signupUser) => {
+    let newErrors = errors;
+    if (name === 'password') {
+      if (formData[name].length < 5) newErrors[name] = true;
+      else newErrors[name] = false;
+    } else if (name === 'confirm-password') {
+      if (formData[name] !== formData.password) newErrors[name] = true;
+      else newErrors[name] = false;
+    } else if (formData[name].length === 0) newErrors[name] = true;
+    else newErrors[name] = false;
+    setErrors(newErrors);
+  };
+
+  // Change form data on input and check validity after change
   const handleInputChange =
-    (type: keyof signupUser) => (e: React.SyntheticEvent) => {
+    (name: keyof signupUser) => (e: React.SyntheticEvent) => {
       let target = e.target as HTMLInputElement;
       let array = formData;
-      let key = array[type];
+      let key = array[name];
       key = target.value;
-      array[type] = key;
+      array[name] = key;
       setFormData({ ...array });
+      checkValidity(name);
     };
-
+  // Submit form data from state as json
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
@@ -71,6 +95,7 @@ export default function SignUp() {
       console.error(err);
     }
   };
+
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -89,12 +114,7 @@ export default function SignUp() {
           <Typography component="h1" variant="h5">
             Create account
           </Typography>
-          <Box
-            component="form"
-            noValidate
-            onSubmit={handleSubmit}
-            sx={{ mt: 3 }}
-          >
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
@@ -105,6 +125,10 @@ export default function SignUp() {
                   id="firstname"
                   label="First Name"
                   onChange={handleInputChange('firstname')}
+                  error={errors.firstname}
+                  helperText={
+                    errors.firstname !== false ? 'Enter your first name.' : ''
+                  }
                   autoFocus
                 />
               </Grid>
@@ -117,17 +141,28 @@ export default function SignUp() {
                   name="lastname"
                   autoComplete="family-name"
                   onChange={handleInputChange('lastname')}
+                  error={errors.lastname}
+                  helperText={
+                    errors.lastname !== false ? 'Enter your last name.' : ''
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
                   fullWidth
+                  type="email"
                   id="email"
                   label="Email Address"
                   name="email"
                   autoComplete="email"
                   onChange={handleInputChange('email')}
+                  error={errors.email}
+                  helperText={
+                    errors.email !== false
+                      ? 'Enter a valid email. ex: john@email.com'
+                      : ''
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -140,6 +175,12 @@ export default function SignUp() {
                   id="password"
                   autoComplete="new-password"
                   onChange={handleInputChange('password')}
+                  error={errors.password}
+                  helperText={
+                    errors.password !== false
+                      ? 'Password must be at least 5 characters.'
+                      : ''
+                  }
                 />
               </Grid>
               <Grid item xs={12}>
@@ -151,6 +192,12 @@ export default function SignUp() {
                   type="password"
                   id="confirm-password"
                   onChange={handleInputChange('confirm-password')}
+                  error={errors['confirm-password']}
+                  helperText={
+                    errors['confirm-password'] !== false
+                      ? "Passwords don't match"
+                      : ''
+                  }
                 />
               </Grid>
             </Grid>
