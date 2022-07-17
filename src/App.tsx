@@ -18,6 +18,7 @@ const App = () => {
     localStorage.getItem('token') || 'no token'
   );
 
+  // Check if user is logged in via jwt token on each render
   const checkToken = () => {
     if (localStorage.getItem('token')) {
       setLoggedIn(true);
@@ -41,6 +42,9 @@ const App = () => {
           {loggedIn && (
             <Route path="/login" element={<Navigate to="/posts" />} />
           )}
+          {loggedIn && (
+            <Route path="/signup" element={<Navigate to="/posts" />} />
+          )}
           <Route
             path="/login"
             element={
@@ -51,7 +55,16 @@ const App = () => {
               />
             }
           />
-          <Route path="/signup" element={<Signup />} />
+          <Route
+            path="/signup"
+            element={
+              <Signup
+                loggedIn={loggedIn}
+                token={token}
+                checkToken={checkToken}
+              />
+            }
+          />
         </Routes>
       </Router>
       <Footer />
