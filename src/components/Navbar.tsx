@@ -3,8 +3,14 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
+import { userProps } from '../types.d';
 
-const Navbar = () => {
+const Navbar = ({ loggedIn, token, checkToken }: userProps) => {
+  const logOut = () => {
+    localStorage.removeItem('token');
+    checkToken();
+  };
+
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
@@ -14,12 +20,21 @@ const Navbar = () => {
               Blog
             </Button>
           </Typography>
-          <Button color="inherit" href="/signup">
-            Sign Up
-          </Button>
-          <Button color="inherit" href="/login">
-            Login
-          </Button>
+          {!loggedIn && (
+            <div>
+              <Button color="inherit" href="/signup">
+                Sign Up
+              </Button>
+              <Button color="inherit" href="/login">
+                Login
+              </Button>
+            </div>
+          )}
+          {loggedIn && (
+            <Button onClick={logOut} color="inherit">
+              Log Out
+            </Button>
+          )}
         </Toolbar>
       </AppBar>
     </Box>
