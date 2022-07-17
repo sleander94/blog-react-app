@@ -10,7 +10,7 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { signupUser, formErrors } from '../types.d';
+import { signupUser, formErrors, userProps } from '../types.d';
 
 function Copyright(props: any) {
   return (
@@ -32,7 +32,7 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function SignUp() {
+export default function SignUp({ loggedIn, token, checkToken }: userProps) {
   // Set error status of all inputs to false by default
   const [errors, setErrors] = React.useState<formErrors>({
     firstname: false,
@@ -92,6 +92,30 @@ export default function SignUp() {
           'confirm-password': formData['confirm-password'],
         }),
       });
+      // Login if user is created succesfully.
+      if (response.ok) {
+        console.log('Ok');
+        try {
+          const response = await fetch('/login', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              email: formData.email,
+              password: formData.password,
+            }),
+          });
+          const data = await response.json();
+          if (data.token && data.user) {
+            localStorage.setItem('token', data.token);
+            localStorage.setItem('user', data.user);
+          }
+          checkToken();
+        } catch (err) {
+          console.error(err);
+        }
+      }
     } catch (err) {
       console.error(err);
     }
