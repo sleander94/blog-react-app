@@ -29,12 +29,21 @@ const App = () => {
   return (
     <div className="App">
       <Router>
-        <Navbar loggedIn={loggedIn} checkToken={checkToken} />
+        <Navbar loggedIn={loggedIn} token={token} checkToken={checkToken} />
         <Routes>
           <Route path="/" element={<Navigate to="/posts" />} />
           <Route path="/posts" element={<Posts />} />
           <Route path={`/posts/:id`} element={<Post />} />
-          <Route path="/login" element={<Login checkToken={checkToken} />} />
+          <Route
+            path="/login"
+            element={
+              <Login
+                loggedIn={loggedIn}
+                token={token}
+                checkToken={checkToken}
+              />
+            }
+          />
           <Route path="/signup" element={<Signup />} />
         </Routes>
         <Footer />
