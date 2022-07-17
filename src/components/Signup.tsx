@@ -32,7 +32,7 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function SignUp({ loggedIn, token, checkToken }: userProps) {
+export default function SignUp({ checkToken }: userProps) {
   // Set error status of all inputs to false by default
   const [errors, setErrors] = React.useState<formErrors>({
     firstname: false,

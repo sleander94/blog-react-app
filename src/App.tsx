@@ -46,12 +46,7 @@ const App = () => {
 
   return (
     <div className="App">
-      <Navbar
-        loggedIn={loggedIn}
-        token={token}
-        checkToken={checkToken}
-        username={username}
-      />
+      <Navbar loggedIn={loggedIn} checkToken={checkToken} username={username} />
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/posts" />} />
@@ -65,24 +60,9 @@ const App = () => {
           )}
           <Route
             path="/login"
-            element={
-              <Login
-                loggedIn={loggedIn}
-                token={token}
-                checkToken={checkToken}
-              />
-            }
+            element={<Login loggedIn={loggedIn} checkToken={checkToken} />}
           />
-          <Route
-            path="/signup"
-            element={
-              <Signup
-                loggedIn={loggedIn}
-                token={token}
-                checkToken={checkToken}
-              />
-            }
-          />
+          <Route path="/signup" element={<Signup checkToken={checkToken} />} />
         </Routes>
       </Router>
       <Footer />

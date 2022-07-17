@@ -33,7 +33,7 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function Login({ loggedIn, token, checkToken }: userProps) {
+export default function Login({ loggedIn, checkToken }: userProps) {
   // Set error status of all inputs to false by default
   const [errors, setErrors] = React.useState<formErrors>({
     email: false,
