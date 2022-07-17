@@ -75,6 +75,9 @@ export default function SignUp({ loggedIn, token, checkToken }: userProps) {
       checkValidity(name);
     };
 
+  // Show error message on unsuccessful signup (400 response)
+  const [badSignup, setBadSignup] = React.useState<boolean>(false);
+
   // Submit form data from state as json
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -94,7 +97,6 @@ export default function SignUp({ loggedIn, token, checkToken }: userProps) {
       });
       // Login if user is created succesfully.
       if (response.ok) {
-        console.log('Ok');
         try {
           const response = await fetch('/login', {
             method: 'POST',
@@ -116,6 +118,8 @@ export default function SignUp({ loggedIn, token, checkToken }: userProps) {
         } catch (err) {
           console.error(err);
         }
+      } else {
+        setBadSignup(true);
       }
     } catch (err) {
       console.error(err);
@@ -137,10 +141,19 @@ export default function SignUp({ loggedIn, token, checkToken }: userProps) {
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <PersonAddAltIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
             Create account
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          {badSignup && (
+            <Typography
+              component="p"
+              sx={{ p: 1, mb: 0, width: '100%' }}
+              color="error"
+            >
+              An account with that email already exists.
+            </Typography>
+          )}
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 0 }}>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
                 <TextField
