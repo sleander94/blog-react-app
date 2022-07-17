@@ -38,6 +38,9 @@ const App = () => {
           <Route path="/" element={<Navigate to="/posts" />} />
           <Route path="/posts" element={<Posts />} />
           <Route path={`/posts/:id`} element={<Post />} />
+          {loggedIn && (
+            <Route path="/login" element={<Navigate to="/posts" />} />
+          )}
           <Route
             path="/login"
             element={
