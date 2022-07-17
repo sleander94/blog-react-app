@@ -10,8 +10,10 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { red } from '@mui/material/colors';
 import { loginUser, formErrors } from '../types.d';
 import { userProps } from '../types.d';
+import { width } from '@mui/system';
 
 function Copyright(props: any) {
   return (
@@ -64,6 +66,9 @@ export default function Login({ loggedIn, token, checkToken }: userProps) {
       checkValidity(name);
     };
 
+  // Show error message on unsuccessful login (400 response)
+  const [badLogin, setBadLogin] = React.useState<boolean>(false);
+
   // Submit form data from state as json
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -79,15 +84,16 @@ export default function Login({ loggedIn, token, checkToken }: userProps) {
         }),
       });
       const data = await response.json();
-      if (data.token) {
+      if (data.token && data.user) {
         localStorage.setItem('token', data.token);
       }
       checkToken();
+      if (!loggedIn) setBadLogin(true);
     } catch (err) {
       console.error(err);
     }
   };
-
+  const color = red[500];
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
@@ -103,10 +109,19 @@ export default function Login({ loggedIn, token, checkToken }: userProps) {
           <Avatar sx={{ m: 1, bgcolor: 'primary.main' }}>
             <PermIdentityIcon />
           </Avatar>
-          <Typography component="h1" variant="h5">
+          <Typography component="h1" variant="h5" sx={{ mb: 3 }}>
             Log in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+          {badLogin && (
+            <Typography
+              component="p"
+              sx={{ p: 1, mb: 0, width: '100%' }}
+              color="error"
+            >
+              Invalid email or password.
+            </Typography>
+          )}
+          <Box component="form" onSubmit={handleSubmit} sx={{ mt: 0 }}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
                 <TextField
