@@ -1,15 +1,31 @@
+import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { userProps } from '../types.d';
+import { useEffect } from 'react';
 
 const Navbar = ({ loggedIn, token, checkToken }: userProps) => {
+  const [username, setUsername] = useState<string>('');
+
   const logOut = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
     checkToken();
   };
+
+  useEffect(() => {
+    const getUsername = () => {
+      const name =
+        localStorage.getItem('firstname') +
+        ' ' +
+        localStorage.getItem('lastname');
+      setUsername(name);
+    };
+    getUsername();
+  });
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -31,9 +47,18 @@ const Navbar = ({ loggedIn, token, checkToken }: userProps) => {
             </div>
           )}
           {loggedIn && (
-            <Button onClick={logOut} color="inherit">
-              Log Out
-            </Button>
+            <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+              <Typography
+                variant="subtitle1"
+                component="p"
+                sx={{ fontWeight: 600 }}
+              >
+                {username}
+              </Typography>
+              <Button onClick={logOut} color="inherit">
+                Log Out
+              </Button>
+            </Box>
           )}
         </Toolbar>
       </AppBar>
