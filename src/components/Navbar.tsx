@@ -7,25 +7,12 @@ import Button from '@mui/material/Button';
 import { userProps } from '../types.d';
 import { useEffect } from 'react';
 
-const Navbar = ({ loggedIn, token, checkToken }: userProps) => {
-  const [username, setUsername] = useState<string>('');
-
+const Navbar = ({ loggedIn, token, checkToken, username }: userProps) => {
   const logOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     checkToken();
   };
-
-  useEffect(() => {
-    const getUsername = () => {
-      const name =
-        localStorage.getItem('firstname') +
-        ' ' +
-        localStorage.getItem('lastname');
-      setUsername(name);
-    };
-    getUsername();
-  });
 
   return (
     <Box sx={{ flexGrow: 1 }}>

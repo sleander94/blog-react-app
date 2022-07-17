@@ -14,11 +14,12 @@ import Signup from './components/Signup';
 
 const App = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [username, setUsername] = useState<string>('');
   const [token, setToken] = useState<string>(
     localStorage.getItem('token') || 'no token'
   );
 
-  // Check if user is logged in via jwt token on each render
+  // Check if user is logged in via jwt token
   const checkToken = () => {
     if (localStorage.getItem('token')) {
       setLoggedIn(true);
@@ -27,13 +28,30 @@ const App = () => {
     }
   };
 
+  // Get user's first and last name from local storage if loggedIn
+  const getUsername = () => {
+    if (loggedIn) {
+      const name =
+        localStorage.getItem('firstname') +
+        ' ' +
+        localStorage.getItem('lastname');
+      setUsername(name);
+    }
+  };
+
   useEffect(() => {
     checkToken();
+    getUsername();
   });
 
   return (
     <div className="App">
-      <Navbar loggedIn={loggedIn} token={token} checkToken={checkToken} />
+      <Navbar
+        loggedIn={loggedIn}
+        token={token}
+        checkToken={checkToken}
+        username={username}
+      />
       <Router>
         <Routes>
           <Route path="/" element={<Navigate to="/posts" />} />
