@@ -10,7 +10,7 @@ import PersonAddAltIcon from '@mui/icons-material/PersonAddAlt';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { signupUser } from '../types.d';
+import { signupUser, formErrors } from '../types.d';
 
 function Copyright(props: any) {
   return (
@@ -34,7 +34,7 @@ const theme = createTheme();
 
 export default function SignUp() {
   // Set error status of all inputs to false by default
-  const [errors, setErrors] = React.useState<any>({
+  const [errors, setErrors] = React.useState<formErrors>({
     firstname: false,
     lastname: false,
     email: false,
@@ -74,6 +74,7 @@ export default function SignUp() {
       setFormData({ ...array });
       checkValidity(name);
     };
+
   // Submit form data from state as json
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
