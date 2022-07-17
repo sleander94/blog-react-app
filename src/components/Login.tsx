@@ -11,6 +11,7 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { loginUser, formErrors } from '../types.d';
+import { userProps } from '../types.d';
 
 function Copyright(props: any) {
   return (
@@ -32,7 +33,7 @@ function Copyright(props: any) {
 
 const theme = createTheme();
 
-export default function Login() {
+export default function Login({ loggedIn, token, checkToken }: userProps) {
   // Set error status of all inputs to false by default
   const [errors, setErrors] = React.useState<formErrors>({
     email: false,
@@ -77,6 +78,11 @@ export default function Login() {
           password: formData.password,
         }),
       });
+      const data = await response.json();
+      if (data.token) {
+        localStorage.setItem('token', data.token);
+      }
+      checkToken();
     } catch (err) {
       console.error(err);
     }
