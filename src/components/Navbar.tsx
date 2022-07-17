@@ -10,7 +10,8 @@ import { useEffect } from 'react';
 const Navbar = ({ loggedIn, checkToken, username }: userProps) => {
   const logOut = () => {
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('firstname');
+    localStorage.removeItem('lastname');
     checkToken();
   };
 
