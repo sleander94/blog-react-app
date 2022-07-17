@@ -26,10 +26,14 @@ const App = () => {
     }
   };
 
+  useEffect(() => {
+    checkToken();
+  });
+
   return (
     <div className="App">
+      <Navbar loggedIn={loggedIn} token={token} checkToken={checkToken} />
       <Router>
-        <Navbar loggedIn={loggedIn} token={token} checkToken={checkToken} />
         <Routes>
           <Route path="/" element={<Navigate to="/posts" />} />
           <Route path="/posts" element={<Posts />} />
@@ -46,8 +50,8 @@ const App = () => {
           />
           <Route path="/signup" element={<Signup />} />
         </Routes>
-        <Footer />
       </Router>
+      <Footer />
     </div>
   );
 };
