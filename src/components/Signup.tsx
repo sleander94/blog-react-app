@@ -109,7 +109,8 @@ export default function SignUp({ loggedIn, token, checkToken }: userProps) {
           const data = await response.json();
           if (data.token && data.user) {
             localStorage.setItem('token', data.token);
-            localStorage.setItem('user', data.user);
+            localStorage.setItem('firstname', data.user.firstname);
+            localStorage.setItem('lastname', data.user.lastname);
           }
           checkToken();
         } catch (err) {

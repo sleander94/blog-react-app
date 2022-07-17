@@ -10,10 +10,8 @@ import PermIdentityIcon from '@mui/icons-material/PermIdentity';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { red } from '@mui/material/colors';
 import { loginUser, formErrors } from '../types.d';
 import { userProps } from '../types.d';
-import { width } from '@mui/system';
 
 function Copyright(props: any) {
   return (
@@ -86,6 +84,8 @@ export default function Login({ loggedIn, token, checkToken }: userProps) {
       const data = await response.json();
       if (data.token && data.user) {
         localStorage.setItem('token', data.token);
+        localStorage.setItem('firstname', data.user.firstname);
+        localStorage.setItem('lastname', data.user.lastname);
       }
       checkToken();
       if (!loggedIn) setBadLogin(true);
@@ -93,7 +93,6 @@ export default function Login({ loggedIn, token, checkToken }: userProps) {
       console.error(err);
     }
   };
-  const color = red[500];
   return (
     <ThemeProvider theme={theme}>
       <Container component="main" maxWidth="xs">
