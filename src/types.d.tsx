@@ -41,7 +41,8 @@ export type formErrors = {
 };
 
 export type userProps = {
-  loggedIn: boolean;
-  token: string;
+  loggedIn?: boolean;
+  token?: string;
   checkToken: Function;
+  username?: string;
 };
