@@ -13,15 +13,28 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 
 const App = () => {
+  const [loggedIn, setLoggedIn] = useState<boolean>(false);
+  const [token, setToken] = useState<string>(
+    localStorage.getItem('token') || 'no token'
+  );
+
+  const checkToken = () => {
+    if (localStorage.getItem('token')) {
+      setLoggedIn(true);
+    } else {
+      setLoggedIn(false);
+    }
+  };
+
   return (
     <div className="App">
       <Router>
-        <Navbar />
+        <Navbar loggedIn={loggedIn} checkToken={checkToken} />
         <Routes>
           <Route path="/" element={<Navigate to="/posts" />} />
           <Route path="/posts" element={<Posts />} />
           <Route path={`/posts/:id`} element={<Post />} />
-          <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login checkToken={checkToken} />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
         <Footer />
