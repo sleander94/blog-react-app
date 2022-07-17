@@ -26,3 +26,22 @@ export type signupUser = {
   password: string;
   'confirm-password': string;
 };
+
+export type loginUser = {
+  email: string;
+  password: string;
+};
+
+export type formErrors = {
+  firstname?: boolean;
+  lastname?: boolean;
+  email: boolean;
+  password: boolean;
+  'confirm-password'?: boolean;
+};
+
+export type userProps = {
+  loggedIn: boolean;
+  token: string;
+  checkToken: Function;
+};
