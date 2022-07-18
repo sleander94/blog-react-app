@@ -8,8 +8,9 @@ import Card from '@mui/material/Card';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import CardContent from '@mui/material/CardContent';
+import { userProps } from '../types.d';
 
-const Post = () => {
+const Post = ({ loggedIn }: userProps) => {
   const [post, setPost] = useState<post>({
     author: '',
     authorId: '',
@@ -65,6 +66,11 @@ const Post = () => {
         setResponseMessage(data.message);
       }
       getPostAndComments();
+      // Clear textfield on successful post
+      if (document.getElementById('commentText')) {
+        const text = document.getElementById('commentText') as HTMLInputElement;
+        text.value = '';
+      }
     } catch (err) {
       console.error(err);
     }
@@ -165,29 +171,42 @@ const Post = () => {
               </Grid>
             );
           })}
-          <Grid item xs={11} md={8}>
-            <Typography component="p" variant="subtitle2" sx={{ p: 1 }}>
-              {responseMessage}
-            </Typography>
-            <TextField
-              required
-              fullWidth
-              name="text"
-              label="New Comment"
-              type="text"
-              id="text"
-              onChange={handleInputChange()}
-            />
-            <Box textAlign="center">
-              <Button
-                variant="contained"
-                onClick={() => handleCommentPost()}
-                sx={{ mt: 1 }}
+          {loggedIn && (
+            <Grid item xs={11} md={8}>
+              <Typography component="p" variant="subtitle2" sx={{ p: 1 }}>
+                {responseMessage}
+              </Typography>
+              <TextField
+                required
+                fullWidth
+                name="text"
+                label="New Comment"
+                type="text"
+                id="commentText"
+                onChange={handleInputChange()}
+              />
+              <Box textAlign="center">
+                <Button
+                  variant="contained"
+                  onClick={() => handleCommentPost()}
+                  sx={{ mt: 1 }}
+                >
+                  Submit
+                </Button>
+              </Box>
+            </Grid>
+          )}
+          {!loggedIn && (
+            <Grid item xs={11} md={8}>
+              <Typography
+                component="p"
+                variant="h6"
+                sx={{ p: 1, textAlign: 'center' }}
               >
-                Submit
-              </Button>
-            </Box>
-          </Grid>
+                Log in to leave a comment.
+              </Typography>
+            </Grid>
+          )}
         </Grid>
       </Box>
     </section>
