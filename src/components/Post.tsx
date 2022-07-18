@@ -10,7 +10,7 @@ import TextField from '@mui/material/TextField';
 import CardContent from '@mui/material/CardContent';
 import { userProps } from '../types.d';
 
-const Post = ({ loggedIn }: userProps) => {
+const Post = ({ loggedIn, admin }: userProps) => {
   const [post, setPost] = useState<post>({
     author: '',
     authorId: '',
@@ -96,6 +96,28 @@ const Post = ({ loggedIn }: userProps) => {
     }
   };
 
+  const handlePostDelete = async () => {
+    try {
+      let token = localStorage.getItem('token');
+      const response = await fetch(`/api/posts/${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + token,
+        },
+      });
+      const data = await response.json();
+      if (data.message) {
+        setResponseMessage(data.message);
+      }
+      if (response.ok) {
+        window.location.replace('/posts');
+      }
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   return (
     <section id="post">
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -155,6 +177,26 @@ const Post = ({ loggedIn }: userProps) => {
               </Card>
             </CardContent>
           </Grid>
+          {admin && (
+            <Box
+              textAlign="center"
+              sx={{ display: 'flex', justifyContent: 'center', gap: 4 }}
+            >
+              <Button
+                variant="contained"
+                onClick={() => {
+                  if (
+                    window.confirm('Are you sure you want to delete this post?')
+                  )
+                    handlePostDelete();
+                }}
+                sx={{ mt: 1 }}
+                color="error"
+              >
+                Delete Post
+              </Button>
+            </Box>
+          )}
           <Grid item xs={11} md={8}>
             <Typography
               component="h2"
@@ -186,6 +228,7 @@ const Post = ({ loggedIn }: userProps) => {
                   <Box textAlign="center">
                     <Button
                       variant="contained"
+                      color="error"
                       onClick={() => handleCommentDelete(comment._id)}
                     >
                       Delete
