@@ -21,7 +21,7 @@ const Posts = () => {
   return (
     <section id="posts">
       <Typography component="h1" variant="h3" align="center" sx={{ mb: 4 }}>
-        Solutions
+        Solved Problems
       </Typography>
       <Grid container spacing={4} justifyContent="center">
         {posts.map((post) => {
