@@ -1,27 +1,27 @@
-import { useState } from 'react';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Button from '@mui/material/Button';
 import { userProps } from '../types.d';
-import { useEffect } from 'react';
 
-const Navbar = ({ loggedIn, checkToken, username }: userProps) => {
+const Navbar = ({ loggedIn, checkToken, username, admin }: userProps) => {
   const logOut = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('firstname');
     localStorage.removeItem('lastname');
+    localStorage.removeItem('id');
+    localStorage.removeItem('admin');
     checkToken();
   };
 
   return (
-    <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+    <Box sx={{ flexGrow: 1, mb: 4 }}>
+      <AppBar position="sticky">
         <Toolbar>
           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
             <Button color="inherit" href="/posts">
-              Blog
+              Leander's Leetcode
             </Button>
           </Typography>
           {!loggedIn && (
@@ -43,6 +43,11 @@ const Navbar = ({ loggedIn, checkToken, username }: userProps) => {
               >
                 {username}
               </Typography>
+              {admin && (
+                <Button href="/new-post" color="inherit">
+                  New Post
+                </Button>
+              )}
               <Button onClick={logOut} color="inherit">
                 Log Out
               </Button>
