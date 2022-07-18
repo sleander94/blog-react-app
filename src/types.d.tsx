@@ -1,8 +1,8 @@
 export type post = {
   author: String;
   authorId: String;
-  isPublic: Boolean;
-  text: String;
+  problem: String;
+  solution: String;
   timestamp: String;
   title: String;
   __v: Number;
@@ -45,4 +45,18 @@ export type userProps = {
   token?: string;
   checkToken: Function;
   username?: string;
+  admin?: boolean;
+};
+
+export type postCardProps = {
+  title: String;
+  id: String;
+  date: String;
+};
+
+export type newPost = {
+  title: String;
+  problem: String;
+  solution: String;
+  adminPass: String;
 };
