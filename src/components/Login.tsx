@@ -86,6 +86,7 @@ export default function Login({ loggedIn, checkToken }: userProps) {
       localStorage.setItem('firstname', data.user.firstname);
       localStorage.setItem('lastname', data.user.lastname);
       localStorage.setItem('id', data.user._id);
+      localStorage.setItem('admin', data.user.isAdmin);
       checkToken();
       if (!loggedIn) setBadLogin(true);
     } catch (err) {
