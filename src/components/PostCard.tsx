@@ -8,7 +8,7 @@ import { postCardProps } from '../types.d';
 
 const PostCard = ({ title, date, id }: postCardProps) => {
   return (
-    <Card sx={{ maxWidth: 345, bgcolor: '#e5e5e5' }}>
+    <Card sx={{ maxWidth: 400, minWidth: 300, bgcolor: '#e5e5e5' }}>
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {title}

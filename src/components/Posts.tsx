@@ -26,7 +26,13 @@ const Posts = () => {
       <Grid container spacing={4} justifyContent="center">
         {posts.map((post) => {
           return (
-            <Grid item xs={8} md={4} key={posts.indexOf(post)}>
+            <Grid
+              item
+              xs={8}
+              md={4}
+              key={posts.indexOf(post)}
+              sx={{ display: 'flex', justifyContent: 'center' }}
+            >
               <PostCard
                 title={post.title}
                 date={post.timestamp}
