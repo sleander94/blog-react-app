@@ -8,7 +8,6 @@ import {
 import Navbar from './components/Navbar';
 import Posts from './components/Posts';
 import Post from './components/Post';
-import Footer from './components/Footer';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import PostForm from './components/PostForm';
@@ -17,9 +16,6 @@ const App = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
   const [userID, setUserId] = useState<string>('');
-  const [token, setToken] = useState<string>(
-    localStorage.getItem('token') || 'no token'
-  );
 
   // Check if user is logged in via jwt token
   const checkToken = () => {
@@ -71,7 +67,9 @@ const App = () => {
           <Route path="/posts" element={<Posts />} />
           <Route
             path={`/posts/:id`}
-            element={<Post loggedIn={loggedIn} checkToken={checkToken} />}
+            element={
+              <Post loggedIn={loggedIn} checkToken={checkToken} admin={admin} />
+            }
           />
           {loggedIn && (
             <Route path="/login" element={<Navigate to="/posts" />} />
@@ -87,7 +85,6 @@ const App = () => {
           <Route path="/new-post" element={<PostForm />} />
         </Routes>
       </Router>
-      <Footer />
     </div>
   );
 };
