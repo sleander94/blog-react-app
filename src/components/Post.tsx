@@ -14,8 +14,8 @@ const Post = ({ loggedIn }: userProps) => {
   const [post, setPost] = useState<post>({
     author: '',
     authorId: '',
-    isPublic: false,
-    text: '',
+    solution: '',
+    problem: '',
     timestamp: '',
     title: '',
     __v: 0,
@@ -121,12 +121,36 @@ const Post = ({ loggedIn }: userProps) => {
                   {post.timestamp}
                 </Typography>
                 <Typography
+                  component="h2"
+                  variant="h6"
+                  align="center"
+                  sx={{ p: 1, textDecoration: 'underline' }}
+                >
+                  Problem
+                </Typography>
+                <Typography
                   component="p"
                   variant="body1"
                   align="center"
                   sx={{ p: 2 }}
                 >
-                  {post.text}
+                  {post.problem}
+                </Typography>
+                <Typography
+                  component="h2"
+                  variant="h6"
+                  align="center"
+                  sx={{ p: 1, textDecoration: 'underline' }}
+                >
+                  Solution
+                </Typography>
+                <Typography
+                  component="p"
+                  variant="body1"
+                  align="center"
+                  sx={{ p: 2 }}
+                >
+                  {post.solution}
                 </Typography>
               </Card>
             </CardContent>
