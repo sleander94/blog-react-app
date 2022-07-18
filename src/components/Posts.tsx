@@ -1,16 +1,17 @@
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import { post } from '../types.d';
+import PostCard from './PostCard';
+import Grid from '@mui/material/Grid';
+import { Typography } from '@mui/material';
 
 const Posts = () => {
   const [posts, setPosts] = useState<post[]>([]);
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const response = await fetch('/posts');
+        const response = await fetch('/api/posts');
         const data = await response.json();
         setPosts(data);
-        console.log(posts);
       } catch (err) {
         console.error(err);
       }
@@ -19,18 +20,22 @@ const Posts = () => {
   }, []);
   return (
     <section id="posts">
-      <h1>Posts</h1>
-      {posts.map((post) => {
-        return (
-          <Link to={`/posts/${post._id}`} key={posts.indexOf(post)}>
-            {' '}
-            <p>{post.title}</p>
-            <p>
-              {post.author} | {post.timestamp}
-            </p>
-          </Link>
-        );
-      })}
+      <Typography component="h1" variant="h3" align="center" sx={{ mb: 4 }}>
+        Solutions
+      </Typography>
+      <Grid container spacing={4} justifyContent="center">
+        {posts.map((post) => {
+          return (
+            <Grid item xs={8} md={4} key={posts.indexOf(post)}>
+              <PostCard
+                title={post.title}
+                date={post.timestamp}
+                id={post._id}
+              />
+            </Grid>
+          );
+        })}
+      </Grid>
     </section>
   );
 };
