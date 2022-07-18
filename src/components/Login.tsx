@@ -71,7 +71,7 @@ export default function Login({ loggedIn, checkToken }: userProps) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch('/login', {
+      const response = await fetch('/api/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -82,11 +82,10 @@ export default function Login({ loggedIn, checkToken }: userProps) {
         }),
       });
       const data = await response.json();
-      if (data.token && data.user) {
-        localStorage.setItem('token', data.token);
-        localStorage.setItem('firstname', data.user.firstname);
-        localStorage.setItem('lastname', data.user.lastname);
-      }
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('firstname', data.user.firstname);
+      localStorage.setItem('lastname', data.user.lastname);
+      localStorage.setItem('id', data.user._id);
       checkToken();
       if (!loggedIn) setBadLogin(true);
     } catch (err) {

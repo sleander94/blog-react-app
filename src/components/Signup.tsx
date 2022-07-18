@@ -82,7 +82,7 @@ export default function SignUp({ checkToken }: userProps) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch('/signup', {
+      const response = await fetch('/api/signup', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ export default function SignUp({ checkToken }: userProps) {
       // Login if user is created succesfully.
       if (response.ok) {
         try {
-          const response = await fetch('/login', {
+          const response = await fetch('/api/login', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -109,11 +109,10 @@ export default function SignUp({ checkToken }: userProps) {
             }),
           });
           const data = await response.json();
-          if (data.token && data.user) {
-            localStorage.setItem('token', data.token);
-            localStorage.setItem('firstname', data.user.firstname);
-            localStorage.setItem('lastname', data.user.lastname);
-          }
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('firstname', data.user.firstname);
+          localStorage.setItem('lastname', data.user.lastname);
+          localStorage.setItem('id', data.user._id);
           checkToken();
         } catch (err) {
           console.error(err);
