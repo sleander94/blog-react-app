@@ -130,6 +130,11 @@ const Post = ({ loggedIn, admin }: userProps) => {
     }
   };
 
+  const codeBlockStyle = {
+    display: 'flex',
+    justifyContent: 'center',
+  };
+
   return (
     <section id="post">
       <Box sx={{ display: 'flex', justifyContent: 'center' }}>
@@ -178,14 +183,16 @@ const Post = ({ loggedIn, admin }: userProps) => {
                 >
                   Solution
                 </Typography>
-                <Typography
-                  component="p"
-                  variant="body1"
-                  align="center"
-                  sx={{ p: 2 }}
-                >
-                  {decode(post.solution)}
-                </Typography>
+                <pre style={codeBlockStyle}>
+                  <Typography
+                    component="code"
+                    variant="body1"
+                    align="left"
+                    sx={{ p: 2 }}
+                  >
+                    {decode(post.solution)}
+                  </Typography>
+                </pre>
               </Card>
             </CardContent>
           </Grid>
