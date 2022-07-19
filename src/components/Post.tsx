@@ -9,6 +9,7 @@ import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import CardContent from '@mui/material/CardContent';
 import { userProps } from '../types.d';
+import { decode } from 'html-entities';
 
 const Post = ({ loggedIn, admin }: userProps) => {
   const [post, setPost] = useState<post>({
@@ -148,7 +149,7 @@ const Post = ({ loggedIn, admin }: userProps) => {
                   align="center"
                   sx={{ p: 2 }}
                 >
-                  {post.title}
+                  {decode(post.title)}
                 </Typography>
                 <Typography component="h2" variant="subtitle1" align="center">
                   {post.timestamp}
@@ -167,7 +168,7 @@ const Post = ({ loggedIn, admin }: userProps) => {
                   align="center"
                   sx={{ p: 2 }}
                 >
-                  {post.problem}
+                  {decode(post.problem)}
                 </Typography>
                 <Typography
                   component="h2"
@@ -183,7 +184,7 @@ const Post = ({ loggedIn, admin }: userProps) => {
                   align="center"
                   sx={{ p: 2 }}
                 >
-                  {post.solution}
+                  {decode(post.solution)}
                 </Typography>
               </Card>
             </CardContent>
@@ -231,7 +232,7 @@ const Post = ({ loggedIn, admin }: userProps) => {
                       variant="body2"
                       sx={{ p: 2, pt: 0 }}
                     >
-                      {comment.text}
+                      {decode(comment.text)}
                     </Typography>
                   </Card>
                 </CardContent>

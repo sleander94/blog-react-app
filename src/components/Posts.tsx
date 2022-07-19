@@ -3,6 +3,7 @@ import { post } from '../types.d';
 import PostCard from './PostCard';
 import Grid from '@mui/material/Grid';
 import { Typography } from '@mui/material';
+import { decode } from 'html-entities';
 
 const Posts = () => {
   const [posts, setPosts] = useState<post[]>([]);
@@ -36,9 +37,9 @@ const Posts = () => {
               sx={{ display: 'flex', justifyContent: 'center' }}
             >
               <PostCard
-                title={post.title}
-                date={post.timestamp}
-                id={post._id}
+                title={decode(post.title)}
+                date={decode(post.timestamp)}
+                id={decode(post._id)}
               />
             </Grid>
           );

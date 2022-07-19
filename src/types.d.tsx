@@ -1,20 +1,20 @@
 export type post = {
-  author: String;
-  authorId: String;
-  problem: String;
-  solution: String;
-  timestamp: String;
-  title: String;
+  author: string;
+  authorId: string;
+  problem: string;
+  solution: string;
+  timestamp: string;
+  title: string;
   __v: Number;
-  _id: String;
+  _id: string;
 };
 
 export type comment = {
-  author: String;
-  authorId: String;
-  text: String;
-  timestamp: String;
-  post: String;
+  author: string;
+  authorId: string;
+  text: string;
+  timestamp: string;
+  post: string;
   __v: Number;
   _id: String;
 };
