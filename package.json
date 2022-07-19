@@ -1,6 +1,10 @@
 {
   "name": "blog-frontend",
   "version": "0.1.0",
+  "engines": {
+    "npm": "8.13.1",
+    "node": "16.14.2"
+  },
   "private": true,
   "homepage": "http://sleander94.github.io/blog-react-app",
   "proxy": "https://afternoon-forest-49583.herokuapp.com/",
