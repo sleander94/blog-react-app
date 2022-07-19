@@ -82,32 +82,38 @@ export default function SignUp({ checkToken }: userProps) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch('/api/signup', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          firstname: formData.firstname,
-          lastname: formData.lastname,
-          email: formData.email,
-          password: formData.password,
-          'confirm-password': formData['confirm-password'],
-        }),
-      });
+      const response = await fetch(
+        'https://afternoon-forest-49583.herokuapp.com/api/signup',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            firstname: formData.firstname,
+            lastname: formData.lastname,
+            email: formData.email,
+            password: formData.password,
+            'confirm-password': formData['confirm-password'],
+          }),
+        }
+      );
       // Login if user is created succesfully.
       if (response.ok) {
         try {
-          const response = await fetch('/api/login', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-              email: formData.email,
-              password: formData.password,
-            }),
-          });
+          const response = await fetch(
+            'https://afternoon-forest-49583.herokuapp.com/api/login',
+            {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                email: formData.email,
+                password: formData.password,
+              }),
+            }
+          );
           const data = await response.json();
           localStorage.setItem('token', data.token);
           localStorage.setItem('firstname', data.user.firstname);

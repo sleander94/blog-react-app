@@ -12,6 +12,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { loginUser, formErrors } from '../types.d';
 import { userProps } from '../types.d';
+import { API_URL } from '../App';
 
 function Copyright(props: any) {
   return (
@@ -71,16 +72,19 @@ export default function Login({ loggedIn, checkToken }: userProps) {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
-      const response = await fetch('/api/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
+      const response = await fetch(
+        'https://afternoon-forest-49583.herokuapp.com/api/login',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: formData.email,
+            password: formData.password,
+          }),
+        }
+      );
       const data = await response.json();
       localStorage.setItem('token', data.token);
       localStorage.setItem('firstname', data.user.firstname);

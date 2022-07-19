@@ -37,19 +37,22 @@ export default function PostForm() {
     event.preventDefault();
     try {
       let token = localStorage.getItem('token');
-      const response = await fetch('/api/posts', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
-        },
-        body: JSON.stringify({
-          title: formData.title,
-          problem: formData.problem,
-          solution: formData.solution,
-          adminPass: formData.adminPass,
-        }),
-      });
+      const response = await fetch(
+        'https://afternoon-forest-49583.herokuapp.com/api/posts',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+          body: JSON.stringify({
+            title: formData.title,
+            problem: formData.problem,
+            solution: formData.solution,
+            adminPass: formData.adminPass,
+          }),
+        }
+      );
       const data = await response.json();
       if (data.message) {
         setResponseMessage(data.message);

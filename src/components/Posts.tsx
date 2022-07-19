@@ -9,7 +9,9 @@ const Posts = () => {
   useEffect(() => {
     const getPosts = async () => {
       try {
-        const response = await fetch('/api/posts');
+        const response = await fetch(
+          'https://afternoon-forest-49583.herokuapp.com/api/posts'
+        );
         const data = await response.json();
         setPosts(data);
       } catch (err) {

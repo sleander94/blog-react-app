@@ -26,7 +26,9 @@ const Post = ({ loggedIn, admin }: userProps) => {
 
   const getPostAndComments = async () => {
     try {
-      const response = await fetch(`/api/posts/${id}`);
+      const response = await fetch(
+        `https://afternoon-forest-49583.herokuapp.com/api/posts/${id}`
+      );
       const data = await response.json();
       setPost(data.post);
       setComments(data.comments);
@@ -51,16 +53,19 @@ const Post = ({ loggedIn, admin }: userProps) => {
   const handleCommentPost = async () => {
     try {
       let token = localStorage.getItem('token');
-      const response = await fetch(`/api/posts/${id}`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
-        },
-        body: JSON.stringify({
-          text: commentText,
-        }),
-      });
+      const response = await fetch(
+        `https://afternoon-forest-49583.herokuapp.com/api/posts/${id}`,
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+          body: JSON.stringify({
+            text: commentText,
+          }),
+        }
+      );
       const data = await response.json();
       if (data.message) {
         setResponseMessage(data.message);
@@ -79,13 +84,16 @@ const Post = ({ loggedIn, admin }: userProps) => {
   const handleCommentDelete = async (commentId: String) => {
     try {
       let token = localStorage.getItem('token');
-      const response = await fetch(`/api/posts/${id}/comments/${commentId}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
-        },
-      });
+      const response = await fetch(
+        `https://afternoon-forest-49583.herokuapp.com/api/posts/${id}/comments/${commentId}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        }
+      );
       const data = await response.json();
       if (data.message) {
         setResponseMessage(data.message);
@@ -99,13 +107,16 @@ const Post = ({ loggedIn, admin }: userProps) => {
   const handlePostDelete = async () => {
     try {
       let token = localStorage.getItem('token');
-      const response = await fetch(`/api/posts/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + token,
-        },
-      });
+      const response = await fetch(
+        `https://afternoon-forest-49583.herokuapp.com/api/posts/${id}`,
+        {
+          method: 'DELETE',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + token,
+          },
+        }
+      );
       const data = await response.json();
       if (data.message) {
         setResponseMessage(data.message);

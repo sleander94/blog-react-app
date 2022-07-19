@@ -12,6 +12,8 @@ import Login from './components/Login';
 import Signup from './components/Signup';
 import PostForm from './components/PostForm';
 
+export const API_URL = 'https://afternoon-forest-49583.herokuapp.com';
+
 const App = () => {
   const [loggedIn, setLoggedIn] = useState<boolean>(false);
   const [username, setUsername] = useState<string>('');
