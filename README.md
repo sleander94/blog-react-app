@@ -6,6 +6,8 @@ Frontend for fullstack blog app that connects to Express backend.
 
 I created this app to connect to my backend blog API. 
 
+[Live Demo](https://sleepy-springs-58716.herokuapp.com/posts) 👈
+
 [This API](https://github.com/sleander94/blog-api) serves the data from MongoDB.
 
 ## Features
