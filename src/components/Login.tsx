@@ -12,7 +12,6 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { loginUser, formErrors } from '../types.d';
 import { userProps } from '../types.d';
-import { API_URL } from '../App';
 
 function Copyright(props: any) {
   return (
@@ -86,13 +85,17 @@ export default function Login({ loggedIn, checkToken }: userProps) {
         }
       );
       const data = await response.json();
-      localStorage.setItem('token', data.token);
-      localStorage.setItem('firstname', data.user.firstname);
-      localStorage.setItem('lastname', data.user.lastname);
-      localStorage.setItem('id', data.user._id);
-      localStorage.setItem('admin', data.user.isAdmin);
-      checkToken();
-      if (!loggedIn) setBadLogin(true);
+      if (response.status == 401) {
+        console.log('401');
+        setBadLogin(true);
+      } else if (response.status == 200) {
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('firstname', data.user.firstname);
+        localStorage.setItem('lastname', data.user.lastname);
+        localStorage.setItem('id', data.user._id);
+        localStorage.setItem('admin', data.user.isAdmin);
+        checkToken();
+      }
     } catch (err) {
       console.error(err);
     }
